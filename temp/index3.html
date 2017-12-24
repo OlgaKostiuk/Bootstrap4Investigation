@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        body.slide-active {
+            overflow-x: hidden
+        }
+
+        #page-content {
+            position: relative;
+            padding-top: 70px;
+            left: 0;
+        }
+
+            #page-content.slide-active {
+                padding-top: 0
+            }
+
+        #slide-nav .navbar-toggle {
+            cursor: pointer;
+            position: relative;
+            line-height: 0;
+            float: left;
+            margin: 0;
+            width: 30px;
+            height: 40px;
+            padding: 17px 0 0 0;
+            border: 0;
+            background: transparent;
+        }
+
+            #slide-nav .navbar-toggle.slide-active .icon-bar {
+                background: #CC0F0F;
+                color: #CC0F0F;
+            }
+
+        .navbar-header {
+            position: relative
+        }
+
+        .navbar.navbar-fixed-top.slide-active {
+            position: relative
+        }
+
+        @media (max-width: 767px) {
+            #slide-nav .container {
+                margin: 0 !important;
+                padding: 0 !important;
+                height: 100%;
+            }
+
+            #slide-nav .navbar-header {
+                margin: 0 auto;
+                padding: 0 15px;
+            }
+
+            #slide-nav .navbar.slide-active {
+                position: absolute;
+                width: 80%;
+                top: -1px;
+                z-index: 1000;
+            }
+
+            #slide-nav #slidemenu {
+                background: #f7f7f7;
+                left: -100%;
+                min-width: 0;
+                position: absolute;
+                padding-left: 0;
+                z-index: 2;
+                top: -8px;
+                margin: 0;
+            }
+
+                #slide-nav #slidemenu .navbar-nav {
+                    min-width: 0;
+                    width: 100%;
+                    margin: 0;
+                }
+
+                    #slide-nav #slidemenu .navbar-nav .dropdown-menu li a {
+                        min-width: 0;
+                        width: 80%;
+                        white-space: normal;
+                    }
+
+            #slide-nav {
+                border-top: 0
+            }
+
+                #slide-nav.navbar-inverse #slidemenu {
+                    background: #333
+                }
+
+            #navbar-height-col {
+                position: fixed;
+                top: 0;
+                height: 100%;
+                bottom: 0;
+                background: #f7f7f7;
+            }
+
+                #navbar-height-col.inverse {
+                    background: #333;
+                    z-index: 1;
+                    border: 0;
+                }
+
+            #slide-nav .navbar-form {
+                width: 100%;
+                margin: 8px 0;
+                text-align: center;
+                overflow: hidden;
+                /*fast clearfixer*/
+            }
+
+                #slide-nav .navbar-form .form-control {
+                    text-align: center
+                }
+
+                #slide-nav .navbar-form .btn {
+                    width: 100%
+                }
+        }
+
+        @media (min-width: 768px) {
+            #page-content {
+                left: 0 !important
+            }
+
+            .navbar.navbar-fixed-top.slide-active {
+                position: fixed
+            }
+
+            .navbar-header {
+                left: 0 !important
+            }
+        }
+    </style>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
+            $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
+
+            var slidewidth = '20%';
+            var navbarneg = '-' + slidewidth;
+
+            if ($(window).width() < 767) {
+                $('#navbar-height-col').css("width", slidewidth);
+                $('#navbar-height-col').css("left", navbarneg);
+                $('#slide-nav #slidemenu').css("width", slidewidth);
+                $('#slide-nav #slidemenu').css("left", navbarneg);
+            }
+
+            $("#slide-nav").on("click", '.navbar-toggle', function(e) {
+
+                // slider is active
+                var selected = $(this).hasClass('slide-active');
+
+                // set slidemenu width
+                $('#slidemenu').stop().animate({
+                    left: selected ? navbarneg : '0px'
+                });
+
+                // set navbar width
+                $('#navbar-height-col').stop().animate({
+                    left: selected ? navbarneg : '0px'
+                });
+
+                // set content let
+                $('#page-content').stop().animate({
+                    left: selected ? '0px' : slidewidth
+                });
+
+                // set navbar left
+                $('.navbar-header').stop().animate({
+                    left: selected ? '0px' : slidewidth
+                });
+
+                $(this).toggleClass('slide-active', !selected);
+                $('#slidemenu').toggleClass('slide-active');
+
+                $('#page-content, .navbar, body, .navbar-header').toggleClass('slide-active');
+            });
+
+            var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
+
+            $(window).on("resize", function() {
+                if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
+                    $(selected).removeClass('slide-active');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="slidemenu">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="#">Menu</a>
+                    </li>
+                    <li>
+                        <a href="#">Menu</a>
+                    </li>
+                    <li>
+                        <a href="#">Menu</a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div id="page-content">
+        <div class="container">
+            <h1 class="no-margin-top">Left Sidebar menu</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid sunt minus libero quas soluta blanditiis voluptatibus, eveniet sint tempora! Maxime!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad laudantium deleniti ratione ea voluptas, dolore expedita nisi? Veniam, doloremque, reiciendis.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci blanditiis nam esse molestiae voluptatem maiores fugiat nulla commodi magni impedit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora ducimus iure ipsa ea officia aliquid quibusdam nostrum obcaecati itaque temporibus!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid sunt minus libero quas soluta blanditiis voluptatibus, eveniet sint tempora! Maxime!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad laudantium deleniti ratione ea voluptas, dolore expedita nisi? Veniam, doloremque, reiciendis.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci blanditiis nam esse molestiae voluptatem maiores fugiat nulla commodi magni impedit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora ducimus iure ipsa ea officia aliquid quibusdam nostrum obcaecati itaque temporibus!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid sunt minus libero quas soluta blanditiis voluptatibus, eveniet sint tempora! Maxime!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad laudantium deleniti ratione ea voluptas, dolore expedita nisi? Veniam, doloremque, reiciendis.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci blanditiis nam esse molestiae voluptatem maiores fugiat nulla commodi magni impedit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora ducimus iure ipsa ea officia aliquid quibusdam nostrum obcaecati itaque temporibus!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid sunt minus libero quas soluta blanditiis voluptatibus, eveniet sint tempora! Maxime!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad laudantium deleniti ratione ea voluptas, dolore expedita nisi? Veniam, doloremque, reiciendis.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci blanditiis nam esse molestiae voluptatem maiores fugiat nulla commodi magni impedit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora ducimus iure ipsa ea officia aliquid quibusdam nostrum obcaecati itaque temporibus!</p>
+        </div>
+    </div>
+</body>
+</html>

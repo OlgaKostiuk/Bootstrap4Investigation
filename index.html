@@ -12,7 +12,7 @@
     <script src="Scripts/umd/popper.min.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
     <style>
-        @media (max-width: 768px) {
+        @media (max-width: 575px) {
             .navbar-collapse {
                 height: calc(100vh - 50px);
             }
@@ -66,8 +66,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-        <a class="navbar-brand" href="#">Navbar</a>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -83,6 +82,7 @@
                     <a class="nav-link" href="#">Link</a>
                 </li>
             </ul>
+            <button class="btn btn-outline-primary d-block d-sm-none" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">Close</button>
         </div>
     </nav>
 
@@ -144,6 +144,7 @@
             </div>
         </div>
         <div class="container">
+            <footer>
             <h2>Stacked form</h2>
             <form action="">
                 <div class="form-group">
@@ -163,27 +164,28 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Submit</button>
                 </div>
             </form>
+            </footer>
             <!-- The Modal -->
             <div class="modal fade" id="myModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
-      
+
                         <!-- Modal Header -->
                         <div class="modal-header">
                             <h4 class="modal-title">Modal Heading</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
-        
+
                         <!-- Modal body -->
                         <div class="modal-body">
                             Modal body..
                         </div>
-        
+
                         <!-- Modal footer -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
-        
+
                     </div>
                 </div>
             </div>
